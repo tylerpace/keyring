@@ -36,6 +36,8 @@
 #' @param keyring For systems that support multiple keyrings, specify
 #'   the name of the keyring to use here. If `NULL`, then the default
 #'   keyring is used. See also [has_keyring_support()].
+#' @param prompt prompt message displayed in the window asking for password
+#'   or other confidential information to be stored.
 #' @return `key_get` returns a character scalar, the password or other
 #'   confidential information that was stored in the key.
 #'
@@ -65,7 +67,7 @@
 #' kr_name <- "my_keyring"
 #' kr_service <- "my_database"
 #' kr_username <- "my_username"
-#' 
+#'
 #' ## Create a keyring and add an entry using the variables above
 #' kb <- keyring::backend_file$new()
 #' ## Prompt for the keyring password, used to unlock keyring
@@ -74,9 +76,9 @@
 #' kb$set(kr_service, username=kr_username, keyring=kr_name)
 #' # Lock the keyring
 #' kb$keyring_lock(kr_name)
-#' 
+#'
 #' ## The keyring file is stored at ~/.config/r-keyring/ on Linux
-#' 
+#'
 #' ## Output the stored password
 #' keyring::backend_file$new()$get(service = kr_service,
 #'   user = kr_username,
@@ -101,10 +103,11 @@ key_get_raw <- function(service, username = NULL, keyring = NULL) {
 #' @export
 #' @rdname key_get
 
-key_set <- function(service, username = NULL, keyring = NULL) {
+key_set <- function(service, username = NULL, keyring = NULL, prompt = "api.R prompt: ") {
   assert_that(is_non_empty_string(service))
   assert_that(is_string_or_null(username))
-  default_backend()$set(service, username, keyring = keyring)
+  assert_that(is_string_or_null(prompt))
+  default_backend()$set(service, username, keyring = keyring, prompt = prompt)
 }
 
 #' @export

@@ -103,8 +103,8 @@ b_macos_get_raw <- function(self, private, service, username, keyring) {
   .Call("keyring_macos_get", utf8(keyring), utf8(service), utf8(username))
 }
 
-b_macos_set <- function(self, private, service, username, keyring) {
-  password <- get_pass()
+b_macos_set <- function(self, private, service, username, keyring, prompt = "macos prompt: ") {
+  password <- get_pass(prompt = prompt)
   b_macos_set_with_value(self, private, service, username, password, keyring)
   invisible(self)
 }
