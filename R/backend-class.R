@@ -25,7 +25,7 @@ abstract_method <- function() {
 #' delete(service, username = NULL, keyring = NULL)
 #' list(service = NULL, keyring = NULL)
 #' ```
-#' 
+#'
 #' What these functions do:
 #'
 #' * `get()` queries the secret in a keyring item.
@@ -69,7 +69,7 @@ backend <- R6Class(
       abstract_method(),
     get_raw = function(service, username = NULL, keyring = NULL)
       charToRaw(self$get(service, username, keyring)),
-    set = function(service, username = NULL, keyring = NULL)
+    set = function(service, username = NULL, keyring = NULL, prompt = NULL)
       abstract_method(),
     set_with_value = function(service, username = NULL, password = NULL,
       keyring = NULL) abstract_method(),
@@ -172,7 +172,7 @@ backend_keyrings <- R6Class(
 
     get = function(service, username = NULL, keyring = NULL)
       abstract_method(),
-    set = function(service, username = NULL, keyring = NULL)
+    set = function(service, username = NULL, keyring = NULL, prompt = NULL)
       abstract_method(),
     set_with_value = function(service, username = NULL, password = NULL,
       keyring = NULL)
